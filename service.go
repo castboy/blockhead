@@ -17,9 +17,13 @@ type FullTextOperater interface {
 
 // column.
 type ColumnOperater interface {
-	Delete(col int)
-	MoveAhead(col int)
-	MoveAfter(col int)
+	Get(colID int) (*server.Col, error)
+	ColIDCheck(colID int) error
+	Rm(colID int) error
+	InsertBefore(colID int, col *server.Col) error
+	Exchange(col1ID, col2ID int) error
+	Combine(col1ID, col2ID int) error
+	Split(colID int, position uint) error
 }
 
 
@@ -30,7 +34,7 @@ type WordOperater interface {
 
 func main() {
 	w := server.Word{
-		Ori: []rune("zz"),
+		Ori: []rune("z"),
 	}
 
 	strs := []string{"f", "af", "f", "fe", "fde", "fe"}
